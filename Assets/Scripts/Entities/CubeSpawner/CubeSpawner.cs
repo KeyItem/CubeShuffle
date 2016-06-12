@@ -10,23 +10,47 @@ public class CubeSpawner : MonoBehaviour
     public GameObject Line;
     public GameObject LineHolder;
 
-    public float startTime;
-    public float repeatRate;
+    public float initialLineTime;
+    public float lineTime;
+
+    private int previousNumber;
 
 	void Start ()
     {
-        InvokeRepeating("SpawnCube", startTime, repeatRate);
+        initialLineTime = lineTime;
 	}
 	
 	void Update ()
     {
-	
+        InitializeLines();
 	}
 
-    public void SpawnCube()
+    public void InitializeLines()
     {
-        int spawnRand = Random.Range(1, 5);
-        Debug.Log(spawnRand);
+        if (StateManager.state == "Normal")
+        {
+            lineTime -= Time.deltaTime;
+
+            if (lineTime < 0)
+            {
+                SpawnLines();
+                lineTime = initialLineTime;
+            }
+        }
+        else
+        {
+            Debug.Log("Cant spawn lines because state is incorrect, state is " + StateManager.state);
+        }
+    }
+
+    public void SpawnLines()
+    {
+        int spawnRand = Random.Range(1, 6);
+
+        if (previousNumber == spawnRand)
+        {
+            return;
+        }
 
         switch (spawnRand)
         {
@@ -35,30 +59,38 @@ public class CubeSpawner : MonoBehaviour
                 line1.transform.SetParent(LineHolder.transform);
                 line1.transform.position = spawnVectors[0];
                 line1.name = "Line1";
+                previousNumber = 1;
                 break;
             case 2:
                 GameObject line2 = Instantiate(Line as GameObject);
                 line2.transform.SetParent(LineHolder.transform);
                 line2.transform.position = spawnVectors[1];
                 line2.name = "Line1";
+                previousNumber = 2;
                 break;
             case 3:
                 GameObject line3 = Instantiate(Line as GameObject);
                 line3.transform.SetParent(LineHolder.transform);
                 line3.transform.position = spawnVectors[2];
                 line3.name = "Line1";
+                previousNumber = 3;
                 break;
             case 4:
                 GameObject line4 = Instantiate(Line as GameObject);
                 line4.transform.SetParent(LineHolder.transform);
                 line4.transform.position = spawnVectors[3];
                 line4.name = "Line1";
+                previousNumber = 4;
                 break;
             case 5:
                 GameObject line5 = Instantiate(Line as GameObject);
                 line5.transform.SetParent(LineHolder.transform);
                 line5.transform.position = spawnVectors[4];
                 line5.name = "Line1";
+                previousNumber = 5;
+                break;
+            default:
+                Debug.Log("Something went wrong within the switch @ " + this);
                 break;
         }
 

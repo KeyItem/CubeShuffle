@@ -5,8 +5,10 @@ public class InputManager : MonoBehaviour
 {
     private PlayerController playerController;
 
-    public KeyCode Left;
-    public KeyCode Right;
+    public KeyCode Left1;
+    public KeyCode Left2;
+    public KeyCode Right1;
+    public KeyCode Right2;
 
 	void Awake ()
     {
@@ -21,11 +23,11 @@ public class InputManager : MonoBehaviour
     void CheckForInput()
     {
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(Left))
+        if (Input.GetKeyDown(Left1) || Input.GetKeyDown(Left2))
         {
             playerController.Move("Left");
         }
-        if (Input.GetKeyDown(Right))
+        if (Input.GetKeyDown(Right1) || Input.GetKeyDown(Right2))
         {
             playerController.Move("Right");
         }
