@@ -7,22 +7,12 @@ public class ScoreManager : MonoBehaviour
 
     public static float currentScore = 0;
 
-	void Start ()
-    {
-	
-	}
-	
-	void Update ()
-    {
-	
-	}
-
     public void AddScore (float scoreAddition)
     {
         currentScore += scoreAddition;
     }
 
-    public void ResetScore()
+    public static void ResetScore()
     {
         currentScore = 0;
     }

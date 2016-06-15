@@ -3,9 +3,11 @@ using System.Collections;
 
 public class LineController : MonoBehaviour
 {
+    private RotateParticles particleController;
     private CubeSpawner cubeSpawner;
     private PlayerController playerController;
     private ScoreManager scoreManager;
+    private UIManager uiManager;
 
     public float moveSpeed;
     public float rotateSpeed;
@@ -15,6 +17,8 @@ public class LineController : MonoBehaviour
         cubeSpawner = GameObject.FindGameObjectWithTag("LineSpawner").GetComponent<CubeSpawner>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
+        particleController = GameObject.FindGameObjectWithTag("ParticleController").GetComponent<RotateParticles>();
+        uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
 
         int randColor = Random.Range(1, 6);
 
@@ -57,10 +61,13 @@ public class LineController : MonoBehaviour
         if (other.gameObject.tag != gameObject.tag && other.gameObject.tag != "Shredder")
         {
             StateManager.StateManagement("Game Over");
+            uiManager.GameOver();
         }
         else if (other.gameObject.tag == gameObject.tag)
         {
+            cubeSpawner.lineList.Remove(other.gameObject);
             playerController.ChangeColor();
+            particleController.ChangeColor();
             scoreManager.AddScore(1);
             Destroy(gameObject);
         }

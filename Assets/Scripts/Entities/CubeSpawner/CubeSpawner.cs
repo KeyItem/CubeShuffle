@@ -4,8 +4,11 @@ using System.Collections;
 
 public class CubeSpawner : MonoBehaviour
 {
+    private PlayerController playerController;
+
     public Vector3[] spawnVectors;
     public Material[] colorArray;
+    public List<GameObject> lineList;
 
     public GameObject Line;
     public GameObject LineHolder;
@@ -14,6 +17,11 @@ public class CubeSpawner : MonoBehaviour
     public float lineTime;
 
     private int previousNumber;
+
+    void Awake()
+    {
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+    }
 
 	void Start ()
     {
@@ -59,6 +67,7 @@ public class CubeSpawner : MonoBehaviour
                 line1.transform.SetParent(LineHolder.transform);
                 line1.transform.position = spawnVectors[0];
                 line1.name = "Line1";
+                lineList.Add(line1);
                 previousNumber = 1;
                 break;
             case 2:
@@ -66,6 +75,7 @@ public class CubeSpawner : MonoBehaviour
                 line2.transform.SetParent(LineHolder.transform);
                 line2.transform.position = spawnVectors[1];
                 line2.name = "Line1";
+                lineList.Add(line2);
                 previousNumber = 2;
                 break;
             case 3:
@@ -73,6 +83,7 @@ public class CubeSpawner : MonoBehaviour
                 line3.transform.SetParent(LineHolder.transform);
                 line3.transform.position = spawnVectors[2];
                 line3.name = "Line1";
+                lineList.Add(line3);
                 previousNumber = 3;
                 break;
             case 4:
@@ -80,6 +91,7 @@ public class CubeSpawner : MonoBehaviour
                 line4.transform.SetParent(LineHolder.transform);
                 line4.transform.position = spawnVectors[3];
                 line4.name = "Line1";
+                lineList.Add(line4);
                 previousNumber = 4;
                 break;
             case 5:
@@ -87,6 +99,7 @@ public class CubeSpawner : MonoBehaviour
                 line5.transform.SetParent(LineHolder.transform);
                 line5.transform.position = spawnVectors[4];
                 line5.name = "Line1";
+                lineList.Add(line5);
                 previousNumber = 5;
                 break;
             default:
@@ -94,5 +107,16 @@ public class CubeSpawner : MonoBehaviour
                 break;
         }
 
+    }
+
+    public void Reset()
+    {
+        for (int i = 0; i < lineList.Count; i++)
+        {
+            Destroy(lineList[i]);
+        }
+
+        playerController.ResetPlayer();
+        
     }
 }
