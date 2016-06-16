@@ -6,9 +6,10 @@ public class PlayerController : MonoBehaviour
     private CubeSpawner cubeSpawner;
     private RotateParticles particleController;
 
-    public float moveDistance = 10f;
+    public float moveDistance;
     public float rotateSpeed = 100f;    
     public float screenPadding = 0.5f;
+    public static float aspectScale;
 
     private float xMin;
     private float xMax;
@@ -19,6 +20,9 @@ public class PlayerController : MonoBehaviour
     {
         cubeSpawner = GameObject.FindGameObjectWithTag("LineSpawner").GetComponent<CubeSpawner>();
         particleController = GameObject.FindGameObjectWithTag("ParticleController").GetComponent<RotateParticles>();
+
+        aspectScale = Camera.main.aspect;
+        transform.localScale = new Vector3 (aspectScale, aspectScale, aspectScale);
 
         float distance = transform.position.z - Camera.main.transform.position.z;
         Vector3 leftMostSide = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance));

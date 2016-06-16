@@ -7,6 +7,8 @@ public class CubeSpawner : MonoBehaviour
     private PlayerController playerController;
 
     public Vector3[] spawnVectors;
+    private Vector3 tempVec;
+
     public Material[] colorArray;
     public List<GameObject> lineList;
 
@@ -16,11 +18,18 @@ public class CubeSpawner : MonoBehaviour
     public float initialLineTime;
     public float lineTime;
 
+    public float numberofLanes;
+    public float laneSpacing;
+
+    private float screenWidth;
+
     private int previousNumber;
 
     void Awake()
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        CalculateScreenVectors();
     }
 
 	void Start ()
@@ -32,6 +41,24 @@ public class CubeSpawner : MonoBehaviour
     {
         InitializeLines();
 	}
+
+    public void CalculateScreenVectors()
+    {
+        Vector2 edgeVector = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+        Vector2 bottomCorner = new Vector2(edgeVector.x, edgeVector.y);
+
+        screenWidth = edgeVector.x * 2;
+
+        laneSpacing = Mathf.Abs((bottomCorner.x * 2) / numberofLanes);
+
+        playerController.moveDistance = laneSpacing;
+
+        spawnVectors[0] = new Vector3(-laneSpacing * 2, 8, 0);
+        spawnVectors[1] = new Vector3(-laneSpacing, 8, 0);
+        spawnVectors[2] = new Vector3(0, 8, 0);
+        spawnVectors[3] = new Vector3(laneSpacing, 8, 0);
+        spawnVectors[4] = new Vector3(laneSpacing * 2, 8, 0);
+    }
 
     public void InitializeLines()
     {

@@ -39,26 +39,27 @@ public class InputManager : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
-
-
 #endif
 
 #if UNITY_ANDROID
-       
-                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+
+        for (int i = 0; i < Input.touchCount; i++)
         {
-            Vector3 touchPos = Input.GetTouch(0).deltaPosition;
-
-            if (touchPos.x > 1)
+            if (Input.GetTouch(i).phase == TouchPhase.Began)
             {
-                playerController.Move("Right");
-            }
-            else
-            {
-                playerController.Move("Left");
-            }
-        } 
+                Vector3 touchVec = Camera.main.ScreenToWorldPoint(Input.GetTouch(i).position);
 
+                if (touchVec.x > 1)
+                {
+                    playerController.Move("Right");
+                }
+                else
+                {
+                    playerController.Move("Left");
+                }
+            }
+
+        }   
 #endif
     }
 }

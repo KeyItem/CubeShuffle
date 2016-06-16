@@ -20,6 +20,10 @@ public class LineController : MonoBehaviour
         particleController = GameObject.FindGameObjectWithTag("ParticleController").GetComponent<RotateParticles>();
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
 
+        transform.localScale = new Vector3(PlayerController.aspectScale, transform.localScale.y, PlayerController.aspectScale);
+
+        rotateSpeed = playerController.rotateSpeed;
+
         int randColor = Random.Range(1, 6);
 
         switch (randColor)
@@ -66,6 +70,7 @@ public class LineController : MonoBehaviour
         else if (other.gameObject.tag == gameObject.tag)
         {
             cubeSpawner.lineList.Remove(other.gameObject);
+            playerController.rotateSpeed += 10;
             playerController.ChangeColor();
             particleController.ChangeColor();
             scoreManager.AddScore(1);
