@@ -6,7 +6,7 @@ public class ScoreGrabber : MonoBehaviour
 {
     private Text scoreText;
 
-    void Awake()
+    void OnEnable()
     {
         scoreText = GetComponent<Text>();
         scoreText.text = ScoreManager.currentScore.ToString();

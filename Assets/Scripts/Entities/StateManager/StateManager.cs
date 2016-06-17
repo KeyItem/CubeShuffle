@@ -23,7 +23,6 @@ public class StateManager : MonoBehaviour
                 break;
             case "Game Over":
                 state = "Game Over";
-                Debug.Log(ScoreManager.currentScore);
                 Time.timeScale = 0;
                 break;
         }

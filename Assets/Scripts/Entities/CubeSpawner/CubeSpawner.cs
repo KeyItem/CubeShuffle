@@ -72,10 +72,6 @@ public class CubeSpawner : MonoBehaviour
                 lineTime = initialLineTime;
             }
         }
-        else
-        {
-            Debug.Log("Cant spawn lines because state is incorrect, state is " + StateManager.state);
-        }
     }
 
     public void SpawnLines()
