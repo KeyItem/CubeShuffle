@@ -7,8 +7,7 @@ public class CubeSpawner : MonoBehaviour
     private PlayerController playerController;
 
     public Vector3[] spawnVectors;
-    private Vector3 tempVec;
-
+   
     public Material[] colorArray;
     public List<GameObject> lineList;
 
@@ -24,6 +23,9 @@ public class CubeSpawner : MonoBehaviour
     private float screenWidth;
 
     private int previousNumber;
+
+    public bool canSpawnLines = true;
+    public bool areLinesInverted = false;
 
     void Awake()
     {
@@ -62,7 +64,7 @@ public class CubeSpawner : MonoBehaviour
 
     public void InitializeLines()
     {
-        if (StateManager.state == "Normal")
+        if (StateManager.state == "Normal" && canSpawnLines == true)
         {
             lineTime -= Time.deltaTime;
 
@@ -71,6 +73,32 @@ public class CubeSpawner : MonoBehaviour
                 SpawnLines();
                 lineTime = initialLineTime;
             }
+        }
+    }
+
+    public void InvertSpawns()
+    {
+        if (areLinesInverted == false)
+        {
+            Debug.Log("InvertUpwards");
+            for (int i = 0; i < 5; i++)
+            {
+                spawnVectors[i] = new Vector3(spawnVectors[i].x, -spawnVectors[i].y, spawnVectors[i].z);
+            }
+
+            playerController.InvertPlayer();
+            areLinesInverted = !areLinesInverted;
+        }
+        else
+        {
+            Debug.Log("InvertDownwards");
+            for (int i = 0; i < 5; i++)
+            {
+                spawnVectors[i] = new Vector3(spawnVectors[i].x, Mathf.Abs(spawnVectors[i].y), spawnVectors[i].z);
+            }
+
+            playerController.InvertPlayer();
+            areLinesInverted = !areLinesInverted;          
         }
     }
 

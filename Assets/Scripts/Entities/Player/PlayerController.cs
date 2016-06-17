@@ -113,6 +113,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void InvertPlayer()
+    {
+        if (cubeSpawner.areLinesInverted == true)
+        {
+            transform.position = new Vector3(transform.position.x, -3, transform.position.z);
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x, 5, transform.position.z);
+        }
+    }
+
     public void ResetPlayer()
     {
         transform.position = new Vector3(0, -3, 0);

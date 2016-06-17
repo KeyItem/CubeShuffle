@@ -7,6 +7,8 @@ public class DifficultyManager : MonoBehaviour
 
     public float increaseInterval = 30f;
     public float speedIncrease = 0.15f;
+    public float inverseTimer = 30f;
+    public float initialInverseTimer;
 
     private float resetIncreaseInterval;
 
@@ -15,6 +17,7 @@ public class DifficultyManager : MonoBehaviour
     void Awake()
     {
         resetIncreaseInterval = increaseInterval;
+        initialInverseTimer = inverseTimer;
 
         cubeSpawner = GameObject.FindGameObjectWithTag("LineSpawner").GetComponent<CubeSpawner>();
     }
@@ -29,16 +32,29 @@ public class DifficultyManager : MonoBehaviour
 
     public void DifficultyAdjuster()
     {
-        increaseInterval -= Time.deltaTime;
-
-        if (increaseInterval < 0 && cubeSpawner.initialLineTime >= 0.40)
+        if (StateManager.state == "Normal")
         {
-            cubeSpawner.initialLineTime -= speedIncrease;
-            increaseInterval = resetIncreaseInterval;
+            increaseInterval -= Time.deltaTime;
+            inverseTimer -= Time.deltaTime;
+
+            if (increaseInterval < 0 && cubeSpawner.initialLineTime >= 0.40)
+            {
+                cubeSpawner.initialLineTime -= speedIncrease;
+                increaseInterval = resetIncreaseInterval;
+            }
+
+            if (inverseTimer < 0)
+            {
+                cubeSpawner.canSpawnLines = false;
+
+                if (cubeSpawner.lineList.Count == 0)
+                {
+                    cubeSpawner.InvertSpawns();
+                    cubeSpawner.canSpawnLines = true;
+                    inverseTimer = initialInverseTimer;
+                }
+            }
+
         }
-
-
-
     }
-
 }

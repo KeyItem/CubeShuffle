@@ -56,20 +56,34 @@ public class LineController : MonoBehaviour
 	
 	void Update ()
     {
-        transform.position += (new Vector3(0, -moveSpeed, 0) * Time.deltaTime);
-        transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+        if (cubeSpawner.areLinesInverted == true)
+        {
+            transform.position += (new Vector3(0, moveSpeed, 0) * Time.deltaTime);
+            transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position += (new Vector3(0, -moveSpeed, 0) * Time.deltaTime);
+            transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+        }
+
 	}
 
     void OnTriggerStay (Collider other)
     {
         if (other.gameObject.tag != gameObject.tag && other.gameObject.tag != "Shredder")
         {
+            if (cubeSpawner.areLinesInverted == true)
+            {
+                cubeSpawner.InvertSpawns();
+                Debug.Log("Reset Lines back to original position");
+            }
             StateManager.StateManagement("Game Over");
             uiManager.GameOver();
         }
         else if (other.gameObject.tag == gameObject.tag)
         {
-            cubeSpawner.lineList.Remove(other.gameObject);
+            cubeSpawner.lineList.Remove(gameObject);
             playerController.rotateSpeed += 10;
             playerController.ChangeColor();
             particleController.ChangeColor();
