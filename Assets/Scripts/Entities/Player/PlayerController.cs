@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
     private RotateParticles particleController;
 
     public float moveDistance;
-    public float rotateSpeed = 100f;    
+    public float rotateSpeed = 100f;
+    public float initialRotateSpeed;
     public float screenPadding = 0.5f;
     public static float aspectScale;
 
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
         xMin = leftMostSide.x + screenPadding;
         xMax = rightMostSide.x - screenPadding;
+
+        initialRotateSpeed = rotateSpeed;
 
         ChangeColor();
     }

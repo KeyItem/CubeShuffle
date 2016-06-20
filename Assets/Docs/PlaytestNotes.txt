@@ -1,0 +1,5 @@
+- Hold Direction to scroll through desired direction
+
+-Change Particles (Less Annoying, Steven Recommened a "Pulsing Effect", maybe have pulse effect when scoring a point"
+
+-Indicator of scoring a point
