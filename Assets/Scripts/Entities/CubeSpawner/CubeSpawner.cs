@@ -20,8 +20,6 @@ public class CubeSpawner : MonoBehaviour
     public float numberofLanes;
     public float laneSpacing;
 
-    private float screenWidth;
-
     private int previousNumber;
 
     public bool canSpawnLines = true;
@@ -48,8 +46,6 @@ public class CubeSpawner : MonoBehaviour
     {
         Vector2 edgeVector = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         Vector2 bottomCorner = new Vector2(edgeVector.x, edgeVector.y);
-
-        screenWidth = edgeVector.x * 2;
 
         laneSpacing = Mathf.Abs((bottomCorner.x * 2) / numberofLanes);
 

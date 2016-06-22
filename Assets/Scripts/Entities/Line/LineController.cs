@@ -8,7 +8,7 @@ public class LineController : MonoBehaviour
     private PlayerController playerController;
     private ScoreManager scoreManager;
     private UIManager uiManager;
-
+    private BurstParticleController burstParticles;
     public float moveSpeed;
     public float rotateSpeed;
 
@@ -19,6 +19,7 @@ public class LineController : MonoBehaviour
         scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
         particleController = GameObject.FindGameObjectWithTag("ParticleController").GetComponent<RotateParticles>();
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+        burstParticles = GameObject.FindGameObjectWithTag("BurstParticleController").GetComponent<BurstParticleController>();
 
         transform.localScale = new Vector3(PlayerController.aspectScale, transform.localScale.y, PlayerController.aspectScale);
 
@@ -86,6 +87,7 @@ public class LineController : MonoBehaviour
             cubeSpawner.lineList.Remove(gameObject);
             playerController.rotateSpeed += 10;
             playerController.ChangeColor();
+            burstParticles.BurstParticles();   
             particleController.ChangeColor();
             scoreManager.AddScore(1);
             Destroy(gameObject);

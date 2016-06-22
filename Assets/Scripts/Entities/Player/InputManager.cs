@@ -45,7 +45,7 @@ public class InputManager : MonoBehaviour
 
         for (int i = 0; i < Input.touchCount; i++)
         {
-            if (Input.GetTouch(i).phase == TouchPhase.Stationary)
+            if (Input.GetTouch(i).phase == TouchPhase.Began)
             {
                 Vector3 touchVec = Camera.main.ScreenToWorldPoint(Input.GetTouch(i).position);
 
